@@ -1,1 +1,17 @@
+“Present Tense” is a real-time generative visual work built in p5.js. The piece produces abstract forms that continuously evolve based on three 
+computational inputs: system time, randomized algorithmic variation, and live cursor movement. As the viewer moves their mouse, the density, speed, 
+and direction of the forms shift. Because the system uses a time-based seed and live interaction, the exact configuration can never repeat.
 
+The work is computational in both structure and execution. Every visual element is generated through code rather than pre-made images. 
+The forms are calculated frame-by-frame using loops, conditionals, and probabilistic variation. The artwork does not exist as a fixed object but as 
+executable instructions that unfold dynamically. Its visual state is the result of real-time computation responding to human input.
+
+The piece speaks to what is authentically human by foregrounding presence and contingency. In The Work of Art in the Age of Mechanical Reproduction, 
+Walter Benjamin argues that reproduction diminishes the “aura” of the artwork, its unique presence in time and space. In contrast, this work cannot be 
+replayed as an identical event. Its form depends on a specific viewer’s gestures at a specific moment. The human does not control the system completely, 
+nor does the system fully determine the outcome. Instead, the work emerges from their interaction.
+
+Authenticity here is not located in a static object, but in an event. The viewer’s hesitation, speed, rhythm, and unpredictability shape the piece in 
+ways that cannot be standardized or archived. The code can generate endlessly, but it requires embodied interaction to become meaningful. 
+The work suggests that in a computational age defined by duplication, authenticity may persist in fleeting, unrepeatable encounters between human 
+intention and algorithmic process.

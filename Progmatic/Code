@@ -1,0 +1,103 @@
+let particles = [];
+let t = 0;
+
+function setup() {
+  createCanvas(windowWidth, windowHeight);
+  background(245);
+  noStroke();
+}
+
+function draw() {
+  // Faint trail instead of full clear
+  fill(245, 20);
+  rect(0, 0, width, height);
+
+  t += 0.01;
+
+  // Spawn particles based on mouse movement
+  let speed = dist(mouseX, mouseY, pmouseX, pmouseY);
+  let count = int(map(speed, 0, 50, 1, 8, true));
+
+  for (let i = 0; i < count; i++) {
+    particles.push(new Particle(mouseX, mouseY, speed));
+  }
+
+  for (let i = particles.length - 1; i >= 0; i--) {
+    particles[i].update();
+    particles[i].display();
+    if (particles[i].isDead()) {
+      particles.splice(i, 1);
+    }
+  }
+
+  // Optional title text
+  fill(30, 120);
+  textSize(16);
+  textAlign(LEFT, BOTTOM);
+  text("Present Tense", 20, height - 20);
+}
+
+class Particle {
+  constructor(x, y, speed) {
+    this.x = x + random(-10, 10);
+    this.y = y + random(-10, 10);
+
+    let angle = noise(x * 0.005, y * 0.005, t) * TWO_PI * 2;
+    let magnitude = random(0.5, 2.5) + speed * 0.03;
+
+    this.vx = cos(angle) * magnitude;
+    this.vy = sin(angle) * magnitude;
+
+    this.size = random(5, 20) + speed * 0.1;
+    this.life = 255;
+
+    // Soft palette
+    this.r = random(50, 180);
+    this.g = random(80, 200);
+    this.b = random(120, 255);
+  }
+
+  update() {
+    this.x += this.vx;
+    this.y += this.vy;
+
+    // Small drift from noise
+    this.x += map(noise(this.x * 0.003, t), 0, 1, -1, 1);
+    this.y += map(noise(this.y * 0.003, t + 100), 0, 1, -1, 1);
+
+    this.life -= 3;
+    this.size *= 0.992;
+  }
+
+  display() {
+    fill(this.r, this.g, this.b, this.life);
+    ellipse(this.x, this.y, this.size);
+  }
+
+  isDead() {
+    return this.life <= 0 || this.size < 0.5;
+  }
+}
+
+function mousePressed() {
+  // Add a burst when clicked
+  for (let i = 0; i < 30; i++) {
+    particles.push(new Particle(mouseX, mouseY, random(5, 20)));
+  }
+}
+
+function keyPressed() {
+  if (key === 's' || key === 'S') {
+    saveCanvas('present-tense', 'png');
+  }
+
+  if (key === 'c' || key === 'C') {
+    background(245);
+    particles = [];
+  }
+}
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+  background(245);
+}

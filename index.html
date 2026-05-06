@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Art + Technology Portfolio</title>
+  <style>
+    :root {
+      --bg: #0b0b10;
+      --panel: rgba(255,255,255,0.05);
+      --panel-strong: rgba(255,255,255,0.08);
+      --border: rgba(255,255,255,0.1);
+      --text: #f5f5f5;
+      --muted: #b3b3bc;
+      --pink: #ff5ea8;
+      --orange: #ff9b54;
+      --cyan: #49d7ff;
+      --blue: #4d7fff;
+      --violet: #8b5cf6;
+      --green: #72e49a;
+      --max-width: 1180px;
+      --radius: 28px;
+      --shadow: 0 18px 50px rgba(0,0,0,0.25);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,0.12), transparent 22%),
+        radial-gradient(circle at bottom right, rgba(255,0,128,0.1), transparent 24%),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .container {
+      width: min(var(--max-width), calc(100% - 2rem));
+      margin: 0 auto;
+    }
+
+    .hero {
+      padding: 5rem 0 4rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 0.45rem 0.9rem;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.04);
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3, p {
+      margin-top: 0;
+    }
+
+    h1 {
+      font-size: clamp(2.5rem, 6vw, 4.8rem);
+      line-height: 1.05;
+      max-width: 900px;
+      margin: 1rem 0 1.2rem;
+    }
+
+    .hero p {
+      max-width: 760px;
+      color: var(--muted);
+      font-size: 1.08rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9rem;
+      margin-top: 2rem;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 0.95rem 1.3rem;
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      font-weight: 600;
+      transition: transform 0.18s ease, background 0.18s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-1px);
+    }
+
+    .button-primary {
+      background: #ffffff;
+      color: #111111;
+    }
+
+    .button-secondary {
+      background: rgba(255,255,255,0.05);
+      color: var(--text);
+    }
+
+    .section {
+      padding: 3.25rem 0;
+    }
+
+    .info-grid,
+    .project-grid {
+      display: grid;
+      gap: 1.2rem;
+    }
+
+    .info-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .info-card,
+    .project-card,
+    .reflection-card {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .info-card {
+      padding: 1.5rem;
+    }
+
+    .small-label {
+      color: var(--muted);
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 0.8rem;
+      display: block;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-header p {
+      color: var(--muted);
+      max-width: 430px;
+    }
+
+    .project-list {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .project-card {
+      overflow: hidden;
+    }
+
+    .project-accent {
+      height: 8px;
+      width: 100%;
+    }
+
+    .accent-1 { background: linear-gradient(90deg, var(--pink), var(--orange)); }
+    .accent-2 { background: linear-gradient(90deg, var(--cyan), var(--blue)); }
+    .accent-3 { background: linear-gradient(90deg, var(--violet), var(--pink)); }
+    .accent-4 { background: linear-gradient(90deg, var(--green), #b7ff64); }
+
+    .project-body {
+      display: grid;
+      grid-template-columns: 1.35fr 0.9fr;
+    }
+
+    .project-main,
+    .project-side {
+      padding: 1.7rem;
+    }
+
+    .project-side {
+      border-left: 1px solid var(--border);
+      background: rgba(0,0,0,0.16);
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      color: var(--muted);
+      font-size: 0.92rem;
+      margin-bottom: 1rem;
+    }
+
+    .meta span::after {
+      content: "•";
+      margin-left: 0.65rem;
+    }
+
+    .meta span:last-child::after {
+      content: "";
+      margin: 0;
+    }
+
+    .project-main p,
+    .project-side p,
+    .project-side li,
+    .info-card p,
+    .reflection-card p,
+    .reflection-card li {
+      color: var(--muted);
+    }
+
+    .concept-box,
+    .media-box,
+    .highlight-item {
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: rgba(255,255,255,0.04);
+    }
+
+    .concept-box,
+    .media-box {
+      padding: 1rem 1.1rem;
+      margin-top: 1.2rem;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      margin-top: 1.1rem;
+    }
+
+    .tag {
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.04);
+      color: #dbdbe2;
+      border-radius: 999px;
+      padding: 0.35rem 0.75rem;
+      font-size: 0.82rem;
+    }
+
+    .highlight-list {
+      display: grid;
+      gap: 0.8rem;
+      margin-top: 1rem;
+    }
+
+    .highlight-item {
+      padding: 0.95rem 1rem;
+      color: #e5e5ec;
+      font-size: 0.95rem;
+    }
+
+    .reflection-wrap {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 1.2rem;
+    }
+
+    .reflection-card {
+      padding: 1.5rem;
+    }
+
+    ul {
+      padding-left: 1.2rem;
+      margin-bottom: 0;
+    }
+
+    footer {
+      padding: 1.5rem 0 3rem;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    @media (max-width: 900px) {
+      .info-grid,
+      .project-body,
+      .reflection-wrap {
+        grid-template-columns: 1fr;
+      }
+
+      .project-side {
+        border-left: 0;
+        border-top: 1px solid var(--border);
+      }
+
+      .section-header {
+        align-items: start;
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero {
+        padding-top: 4rem;
+      }
+
+      .project-main,
+      .project-side,
+      .info-card,
+      .reflection-card {
+        padding: 1.2rem;
+      }
+
+      .button {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="container">
+      <span class="eyebrow">Art + Technology Portfolio</span>
+      <h1>Projects from my class, collected in one place.</h1>
+      <p>
+        A portfolio website documenting interactive experiments, conceptual media work,
+        and browser-based projects developed across the semester. The through-line across
+        the work is interface, emotion, critique, and playful interaction.
+      </p>
+      <div class="hero-actions">
+        <a class="button button-primary" href="#projects">View Projects</a>
+        <a class="button button-secondary" href="#about">About the Work</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="about" class="section">
+      <div class="container">
+        <div class="info-grid">
+          <article class="info-card">
+            <span class="small-label">Theme</span>
+            <h3>Emotion, systems, and interaction</h3>
+            <p>
+              These projects explore how digital interfaces guide feeling, assign meaning,
+              and shape the way people experience systems.
+            </p>
+          </article>
+          <article class="info-card">
+            <span class="small-label">Approach</span>
+            <h3>Critical + experimental</h3>
+            <p>
+              Some pieces are playful. Some are uncomfortable. Together, they test how
+              interaction design can move beyond usability and become reflective.
+            </p>
+          </article>
+          <article class="info-card">
+            <span class="small-label">Format</span>
+            <h3>Built for exhibition and review</h3>
+            <p>
+              The layout works as a clean archive for professors, peers, and future portfolio
+              use, while still feeling designed rather than generic.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="section">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <span class="small-label">Projects</span>
+            <h2>Selected Work</h2>
+          </div>
+          <p>
+            Replace placeholder text, add screenshots, and attach links to live demos,
+            exhibition photos, or videos.
+          </p>
+        </div>
+
+        <div class="project-list">
+          <article class="project-card">
+            <div class="project-accent accent-1"></div>
+            <div class="project-body">
+              <div class="project-main">
+                <div class="meta">
+                  <span>Interactive web piece</span>
+                  <span>2026</span>
+                  <span>Final exhibition project</span>
+                </div>
+                <h3>Emotion Mismatch Music Interface</h3>
+                <p>
+                  A music-based interactive website that asks users what emotion they feel and then
+                  generates a deliberately mismatched daily mix. The piece plays with expectation,
+                  platform familiarity, and emotional dissonance by pairing a reported feeling with
+                  songs and feedback that do not comfortably match it.
+                </p>
+                <div class="concept-box">
+                  <span class="small-label">Concept</span>
+                  <p>
+                    This project explores how digital systems can misread, reshape, or manipulate emotion.
+                    Instead of comforting the user, the interface reflects back an uncanny version of
+                    emotional personalization.
+                  </p>
+                </div>
+                <div class="tags">
+                  <span class="tag">HTML</span>
+                  <span class="tag">CSS</span>
+                  <span class="tag">JavaScript</span>
+                  <span class="tag">UI Design</span>
+                </div>
+              </div>
+              <aside class="project-side">
+                <span class="small-label">Highlights</span>
+                <div class="highlight-list">
+                  <div class="highlight-item">Emotion-based interaction states</div>
+                  <div class="highlight-item">Dynamic album art and track presentation</div>
+                  <div class="highlight-item">Project notes and reported emotion panels</div>
+                  <div class="highlight-item">Exhibition-ready web deployment</div>
+                </div>
+                <div class="media-box">
+                  <span class="small-label">Add media here</span>
+                  <p>Insert a screenshot, link, or exhibition image for this project.</p>
+                </div>
+              </aside>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <div class="project-accent accent-2"></div>
+            <div class="project-body">
+              <div class="project-main">
+                <div class="meta">
+                  <span>Webcam-based interactive experiment</span>
+                  <span>2026</span>
+                  <span>Concept + prototype</span>
+                </div>
+                <h3>Hand Tracking / Gesture Distortion Study</h3>
+                <p>
+                  An experimental webcam piece built around tracking hand coordinates and turning movement
+                  into a system response. The project investigates discomfort, labeling, and the unstable
+                  relationship between what the body does and what a digital system claims it sees.
+                </p>
+                <div class="concept-box">
+                  <span class="small-label">Concept</span>
+                  <p>
+                    The core idea is that computational interpretation is not neutral. A gesture can be delayed,
+                    reframed, or falsely labeled, making the viewer aware of how systems assign meaning to behavior.
+                  </p>
+                </div>
+                <div class="tags">
+                  <span class="tag">Creative Coding</span>
+                  <span class="tag">Computer Vision</span>
+                  <span class="tag">Interaction Design</span>
+                </div>
+              </div>
+              <aside class="project-side">
+                <span class="small-label">Highlights</span>
+                <div class="highlight-list">
+                  <div class="highlight-item">Body movement as input</div>
+                  <div class="highlight-item">System interpretation as critique</div>
+                  <div class="highlight-item">Designed ambiguity and discomfort</div>
+                  <div class="highlight-item">Prototype-based exploration</div>
+                </div>
+                <div class="media-box">
+                  <span class="small-label">Add media here</span>
+                  <p>Insert process photos, sketches, or a video still for this project.</p>
+                </div>
+              </aside>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <div class="project-accent accent-3"></div>
+            <div class="project-body">
+              <div class="project-main">
+                <div class="meta">
+                  <span>Playful browser interaction</span>
+                  <span>2026</span>
+                  <span>Earlier class project</span>
+                </div>
+                <h3>Cursor Bubble World</h3>
+                <p>
+                  A browser-based project where the screen responds to the cursor and emits colorful bubbles
+                  in motion. The piece focuses on immediacy, responsiveness, and delight while testing how
+                  simple interactions can still feel alive and memorable.
+                </p>
+                <div class="concept-box">
+                  <span class="small-label">Concept</span>
+                  <p>
+                    This work is less about critique and more about motion, feedback, and visual reward. It helped
+                    develop a stronger sense of user interaction and screen behavior through lightweight real-time response.
+                  </p>
+                </div>
+                <div class="tags">
+                  <span class="tag">JavaScript</span>
+                  <span class="tag">Animation</span>
+                  <span class="tag">Interaction Design</span>
+                </div>
+              </div>
+              <aside class="project-side">
+                <span class="small-label">Highlights</span>
+                <div class="highlight-list">
+                  <div class="highlight-item">Real-time cursor response</div>
+                  <div class="highlight-item">Animated visual feedback</div>
+                  <div class="highlight-item">Simple interaction with strong payoff</div>
+                  <div class="highlight-item">Foundation for later experimental work</div>
+                </div>
+                <div class="media-box">
+                  <span class="small-label">Add media here</span>
+                  <p>Insert a screenshot or GIF of the interaction in motion.</p>
+                </div>
+              </aside>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <div class="project-accent accent-4"></div>
+            <div class="project-body">
+              <div class="project-main">
+                <div class="meta">
+                  <span>Speculative media critique</span>
+                  <span>2026</span>
+                  <span>Video-based class project</span>
+                </div>
+                <h3>Spotify X Concept Video</h3>
+                <p>
+                  A conceptual media project that used strong voice, pacing, and platform language to critique
+                  recommendation systems and digital incentives. The piece started as a stylized intervention and later
+                  pushed toward making the critique more explicit for the viewer.
+                </p>
+                <div class="concept-box">
+                  <span class="small-label">Concept</span>
+                  <p>
+                    The project examines the hidden logic behind platforms: what they optimize for, what they encourage,
+                    and how users are subtly shaped by system goals they rarely see.
+                  </p>
+                </div>
+                <div class="tags">
+                  <span class="tag">Video Editing</span>
+                  <span class="tag">Narrative Framing</span>
+                  <span class="tag">Platform Critique</span>
+                </div>
+              </div>
+              <aside class="project-side">
+                <span class="small-label">Highlights</span>
+                <div class="highlight-list">
+                  <div class="highlight-item">Strong audiovisual framing</div>
+                  <div class="highlight-item">Focus on backend incentives</div>
+                  <div class="highlight-item">Speculative critique of recommendation logic</div>
+                  <div class="highlight-item">Concept-driven storytelling</div>
+                </div>
+                <div class="media-box">
+                  <span class="small-label">Add media here</span>
+                  <p>Insert a still from the video or link to the final upload.</p>
+                </div>
+              </aside>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="reflection-wrap">
+          <article class="reflection-card">
+            <span class="small-label">Reflection</span>
+            <h2>What this site is for</h2>
+            <p>
+              This website works as both a class archive and a portfolio entry point. It gives each project its own
+              space while showing the bigger thread running through the semester: experimentation with interface,
+              interpretation, affect, and digital behavior.
+            </p>
+          </article>
+
+          <article class="reflection-card">
+            <span class="small-label">Next upgrades</span>
+            <ul>
+              <li>Add screenshots or embedded demos for every project</li>
+              <li>Link to source code or deployed versions where relevant</li>
+              <li>Replace placeholder summaries with your final class language</li>
+              <li>Add a short bio and professor-facing intro if needed</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      Built as a GitHub Pages-ready portfolio site. Rename this file to <strong>index.html</strong> before uploading.
+    </div>
+  </footer>
+</body>
+</html>
